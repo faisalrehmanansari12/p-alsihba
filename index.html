@@ -666,6 +666,13 @@
       margin-top: 20px;
     }
 
+    .intro-card p {
+      font-size: 17px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.86);
+    }
+
+
     @media (max-width: 900px) {
       .wrap {
         width: min(94%, 720px);
@@ -786,6 +793,32 @@
 <body>
   <canvas id="bg"></canvas>
   <div class="noise"></div>
+
+  <audio id="bgMusic" autoplay loop preload="auto" playsinline>
+    <source src="love.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="modal show" id="introModal">
+    <div class="modal-card intro-card">
+      <div class="mini-title">Before the story begins</div>
+      <h2>For <span>Alishba</span></h2>
+
+      <p>
+        Alishba, before you read this story, I want you to know that your softness, your grace,
+        your beauty, and the way you carry love with dignity have always made my heart look at you
+        with respect. Every time I have spoken about our love, I have spoken through my own tongue,
+        my own heart, and my own eyes. Today, I want to place our love gently in your hands and show it
+        from your side, from your silence, your feelings, and your heart. I want to know whether you see
+        our story the same way I do, or whether there is another truth, another feeling, another side of
+        the story that only you can tell me.
+      </p>
+
+      <div class="modal-actions">
+        <button onclick="closeIntroModal()">Let the story begin</button>
+      </div>
+    </div>
+  </div>
+
 
   <div class="modal" id="startModal">
     <div class="modal-card">
@@ -1264,6 +1297,16 @@
       day: "numeric"
     });
 
+
+    function closeIntroModal() {
+      const introModal = document.getElementById("introModal");
+      if (introModal) {
+        introModal.classList.remove("show");
+      }
+
+      startBackgroundMusic();
+    }
+
     function openStartModal() {
       document.getElementById("startModal").classList.add("show");
     }
@@ -1515,6 +1558,30 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
     drawParticles();
+
+    // Soft background music
+    const bgMusic = document.getElementById("bgMusic");
+
+    function startBackgroundMusic() {
+      if (!bgMusic) return;
+
+      bgMusic.volume = 0.28;
+      bgMusic.loop = true;
+
+      const playPromise = bgMusic.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Some browsers block sound autoplay until the first touch/click.
+          // The opening popup button starts it with a real user interaction.
+        });
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", startBackgroundMusic);
+    window.addEventListener("load", startBackgroundMusic);
+    document.addEventListener("click", startBackgroundMusic, { once: true });
+    document.addEventListener("touchstart", startBackgroundMusic, { once: true });
+
   </script>
 </body>
 </html>
