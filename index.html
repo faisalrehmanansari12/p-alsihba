@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Alishba</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    :root {
+      --bg1: #2a0f24;
+      --bg2: #5c1b3d;
+      --pink: #ff7aa8;
+      --rose: #ff4f8b;
+      --soft: #fff0f6;
+      --card: rgba(255, 255, 255, 0.13);
+      --border: rgba(255, 255, 255, 0.25);
+      --text: #fff;
+      --muted: rgba(255, 255, 255, 0.78);
+      --danger: #ffd0df;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(255, 122, 168, 0.35), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255, 203, 222, 0.22), transparent 30%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.8'/%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 2;
+      width: min(1120px, 92%);
+      margin: 0 auto;
+      padding: 34px 0 70px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 46px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .pulse-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--pink);
+      border-radius: 999px;
+      box-shadow: 0 0 0 rgba(255, 122, 168, 0.7);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 122, 168, 0.7); }
+      70% { box-shadow: 0 0 0 18px rgba(255, 122, 168, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 122, 168, 0); }
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 15px;
+      border-radius: 999px;
+      color: var(--soft);
+      backdrop-filter: blur(14px);
+      font-size: 14px;
+      width: max-content;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+      border-radius: 32px;
+    }
+
+    .hero-card {
+      padding: clamp(28px, 5vw, 56px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 122, 168, 0.25);
+      filter: blur(8px);
+      top: -100px;
+      right: -80px;
+    }
+
+    .mini-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--border);
+      color: var(--soft);
+      font-size: 14px;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 82px);
+      line-height: 0.95;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, #fff, #ffc6dc, #ff7aa8);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .note {
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid var(--border);
+      color: rgba(255, 255, 255, 0.84);
+      line-height: 1.75;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      color: white;
+      border-radius: 18px;
+      padding: 15px 20px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      background: linear-gradient(135deg, var(--rose), var(--pink));
+      box-shadow: 0 18px 40px rgba(255, 79, 139, 0.32);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 52px rgba(255, 79, 139, 0.42);
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .phone {
+      padding: 18px;
+      border-radius: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-inner {
+      min-height: 590px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.18), transparent 38%),
+        linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .moon {
+      width: 150px;
+      height: 150px;
+      margin: 24px auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #fff, #ffd6e5 38%, #ff7aa8 70%);
+      box-shadow: 0 0 70px rgba(255, 122, 168, 0.75);
+      animation: float 3.8s ease-in-out infinite;
+      position: relative;
+    }
+
+    .moon::after {
+      content: "";
+      position: absolute;
+      inset: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(138, 18, 61, 0.35);
+      background: rgba(138, 18, 61, 0.12);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    .status {
+      text-align: center;
+    }
+
+    .status h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .status p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .care-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .care {
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .section {
+      margin-top: 28px;
+      padding: 26px;
+    }
+
+    .section h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+      letter-spacing: -0.6px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 780px;
+    }
+
+    .moment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .moment-card {
+      min-height: 150px;
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .moment-card:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .moment-card strong {
+      font-size: 19px;
+    }
+
+    .moment-card small {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .reader {
+      padding: clamp(24px, 4vw, 42px);
+      min-height: 520px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reader-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .reader-title h3 {
+      margin-bottom: 8px;
+    }
+
+    .progress {
+      color: var(--soft);
+      font-size: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.09);
+      padding: 9px 13px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .part-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .part-tab {
+      padding: 10px 13px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.25s ease;
+    }
+
+    .part-tab:hover {
+      background: rgba(255,255,255,0.14);
+    }
+
+    .part-tab.active {
+      color: #fff;
+      border-color: rgba(255, 122, 168, 0.75);
+      background: rgba(255, 122, 168, 0.24);
+    }
+
+    .part-tab.locked {
+      opacity: 0.58;
+    }
+
+    .unlock-box {
+      border-radius: 28px;
+      padding: clamp(22px, 4vw, 38px);
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      min-height: 280px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    .unlock-inner {
+      max-width: 620px;
+      width: 100%;
+    }
+
+    .unlock-inner h4 {
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .unlock-inner p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .code-row,
+    .reader-start-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .reader-start-actions {
+      margin-top: 6px;
+    }
+
+    .reader-start-actions button {
+      min-width: 180px;
+    }
+
+    input {
+      width: min(320px, 100%);
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.10);
+      color: #fff;
+      outline: none;
+      padding: 15px 16px;
+      border-radius: 16px;
+      font-size: 16px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.42);
+    }
+
+    .error {
+      margin-top: 14px;
+      color: var(--danger);
+      min-height: 22px;
+      font-size: 14px;
+    }
+
+    .paragraph-card {
+      border-radius: 28px;
+      padding: clamp(22px, 4vw, 38px);
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      min-height: 310px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .paragraph-card::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 122, 168, 0.16);
+      right: -70px;
+      bottom: -80px;
+      filter: blur(4px);
+    }
+
+    .story-text {
+      position: relative;
+      z-index: 1;
+      color: rgba(255,255,255,0.88);
+      font-size: clamp(18px, 2.1vw, 23px);
+      line-height: 1.9;
+      letter-spacing: -0.2px;
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(8px);
+    }
+
+    .story-text.show {
+      animation: revealParagraph 0.65s ease forwards;
+    }
+
+    @keyframes revealParagraph {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    .story-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .story-dots {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      max-width: 420px;
+      justify-content: flex-end;
+    }
+
+    .story-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.25);
+      transition: 0.25s ease;
+    }
+
+    .story-dot.active {
+      width: 24px;
+      background: var(--pink);
+    }
+
+    .final-lock {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: none;
+    }
+
+    .final-lock.show {
+      display: block;
+      animation: revealParagraph 0.6s ease forwards;
+    }
+
+    .final-message {
+      display: none;
+      margin-top: 20px;
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255,122,168,0.22), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255,255,255,0.22);
+      line-height: 1.9;
+      font-size: 18px;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .final-message.show {
+      display: block;
+      animation: revealParagraph 0.6s ease forwards;
+    }
+
+    .ending-note {
+      color: rgba(255,255,255,0.84);
+      line-height: 1.9;
+      font-size: 18px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 36px;
+      line-height: 1.7;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(15, 6, 14, 0.72);
+      backdrop-filter: blur(16px);
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: grid;
+    }
+
+    .modal-card {
+      width: min(620px, 100%);
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at top left, rgba(255, 122, 168, 0.18), transparent 34%),
+        rgba(56, 24, 46, 0.92);
+      border-radius: 30px;
+      padding: clamp(24px, 5vw, 38px);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.42);
+    }
+
+    .modal-card h2 {
+      font-size: clamp(30px, 5vw, 48px);
+      letter-spacing: -1.4px;
+      margin-bottom: 14px;
+    }
+
+    .modal-card p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .code-pill {
+      display: inline-flex;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin: 10px 0 18px;
+      color: #fff;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .wrap {
+        width: min(94%, 720px);
+        padding: 24px 0 54px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .moment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-inner {
+        min-height: 520px;
+      }
+
+      .reader-top {
+        flex-direction: column;
+      }
+
+      .paragraph-card {
+        min-height: 420px;
+      }
+
+      .story-controls {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .story-dots {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 28px;
+      }
+
+      .chip {
+        width: fit-content;
+        max-width: 100%;
+      }
+
+      h1 {
+        letter-spacing: -1.8px;
+      }
+
+      .card {
+        border-radius: 24px;
+      }
+
+      .hero-card,
+      .section,
+      .reader,
+      .unlock-box,
+      .paragraph-card,
+      .modal-card {
+        border-radius: 22px;
+      }
+
+      .actions,
+      .code-row,
+      .reader-start-actions,
+      .modal-actions {
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .actions button,
+      .code-row button,
+      .reader-start-actions button,
+      .modal-actions button {
+        width: 100%;
+        min-height: 50px;
+      }
+
+      input {
+        width: 100%;
+        min-height: 50px;
+      }
+
+      .part-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+      }
+
+      .part-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .part-tab {
+        flex: 0 0 auto;
+      }
+
+      .unlock-box {
+        min-height: 250px;
+      }
+
+      .paragraph-card {
+        min-height: 360px;
+      }
+
+      .story-text {
+        font-size: 17px;
+        line-height: 1.85;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+  <div class="noise"></div>
+
+  <div class="modal" id="startModal">
+    <div class="modal-card">
+      <div class="mini-title">Before you begin</div>
+      <h2>First code: <span>SILENCE</span></h2>
+      <div class="code-pill">SILENCE</div>
+
+      <p>
+        This story is divided into seven locked parts. The first part starts with this code.
+      </p>
+
+      <p>
+        The next codes will not be shown directly here. Read the story carefully and find the words hidden in the best moments.
+        Or use your love magic on Faisal and make him give you the codes one by one.
+      </p>
+
+      <div class="modal-actions">
+        <button onclick="closeStartModalAndUnlock()">Use SILENCE and begin</button>
+        <button class="secondary" onclick="closeStartModalAndShowInput()">I will enter it myself</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <nav>
+      <div class="brand">
+        <span class="pulse-dot"></span>
+        <span>For Alishba</span>
+      </div>
+      <div class="chip" id="dateChip">Loading...</div>
+    </nav>
+
+    <section class="hero">
+      <div class="card hero-card">
+        <div class="mini-title">A quiet page, written for you</div>
+
+        <h1>Hey <span id="herNameText">Alishba</span>,<br />take it easy today.</h1>
+
+        <p class="lead">
+          I made this because I know you like reading words that feel personal,
+          honest, and full of love. Not something loud. Not something dramatic.
+          Just our story, written softly.
+        </p>
+
+        <div class="note">
+          This is our story from your point of view, divided into locked parts,
+          opened slowly with words that belong to our memories.
+          <br /><br />
+          If today feels heavier because of your period, please take it easy. Rest a bit,
+          drink warm tea, stay hydrated, and get comfy. I am right here.
+        </div>
+
+        <div class="actions">
+          <button onclick="openStartModal()">Start the story</button>
+          <button class="secondary" onclick="scrollToReader()">Go to reader</button>
+        </div>
+      </div>
+
+      <div class="card phone">
+        <div class="phone-inner">
+          <div>
+            <div class="chip" style="margin:auto;">Slow reading mode</div>
+            <div class="moon"></div>
+            <div class="status">
+              <h2>No pressure today.</h2>
+              <p>
+                Just read slowly. Every part is a small piece of where we started,
+                how we changed, and how beautifully this became us.
+              </p>
+            </div>
+          </div>
+
+          <div class="care-grid">
+            <div class="care">A story only we understand</div>
+            <div class="care">Words written with respect</div>
+            <div class="care">Old memories, softly remembered</div>
+            <div class="care">Love without noise</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h3>Small things about us</h3>
+      <p class="section-subtitle">
+        No gifts. No tasks. No overdoing. Just the moments that made this story ours.
+      </p>
+
+      <div class="moment-grid">
+        <div class="moment-card">
+          <strong>The corridor</strong>
+          <small>A normal place for one person, but the first page of everything for the other.</small>
+        </div>
+
+        <div class="moment-card">
+          <strong>Hidden eyes</strong>
+          <small>The kind of attention that stayed quiet, respectful, and unforgettable.</small>
+        </div>
+
+        <div class="moment-card">
+          <strong>One salam</strong>
+          <small>A small greeting that became softer with time.</small>
+        </div>
+
+        <div class="moment-card">
+          <strong>The pen incident</strong>
+          <small>An awkward moment that paused the story, but could not end it.</small>
+        </div>
+
+        <div class="moment-card">
+          <strong>Calculus</strong>
+          <small>A normal question that quietly brought conversations back.</small>
+        </div>
+
+        <div class="moment-card">
+          <strong>Patootie</strong>
+          <small>A silly word to the world, but a soft little language for us.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section reader" id="reader">
+      <div class="reader-top">
+        <div class="reader-title">
+          <h3 id="partTitle">Our story</h3>
+          <p class="section-subtitle" id="partSubtitle">
+            Enter the code to unlock the first part.
+          </p>
+        </div>
+        <div class="progress" id="progressText">Locked</div>
+      </div>
+
+      <div class="part-tabs" id="partTabs"></div>
+
+      <div class="unlock-box" id="unlockBox">
+        <div class="unlock-inner">
+          <h4 id="unlockTitle">Part One is locked</h4>
+          <p id="unlockText">
+            Enter the code to begin reading. The first code is given in the opening popup.
+          </p>
+
+          <div class="reader-start-actions" id="firstPartStartActions">
+            <button onclick="openStartModal()">Start the story</button>
+            <button class="secondary" onclick="showFirstCodeInput()">Enter code manually</button>
+          </div>
+
+          <div class="code-row" id="codeRow">
+            <input id="codeInput" type="text" placeholder="ENTER CODE" />
+            <button onclick="unlockCurrentPart()">Unlock</button>
+          </div>
+
+          <div class="error" id="errorText"></div>
+        </div>
+      </div>
+
+      <div id="storyBox" style="display:none;">
+        <div class="paragraph-card">
+          <p class="story-text show" id="storyText"></p>
+        </div>
+
+        <div class="story-controls">
+          <div class="actions">
+            <button class="secondary" id="prevBtn" onclick="previousParagraph()">Previous</button>
+            <button id="nextBtn" onclick="nextParagraph()">Next</button>
+            <button class="secondary" onclick="restartPart()">Restart part</button>
+          </div>
+
+          <div class="story-dots" id="storyDots"></div>
+        </div>
+
+        <div class="final-lock" id="finalLock">
+          <h3>One last hidden ending</h3>
+          <p class="section-subtitle">
+            If you found the final word, enter it here.
+          </p>
+
+          <div class="code-row">
+            <input id="finalInput" type="text" placeholder="FINAL WORD" />
+            <button onclick="unlockFinalEnding()">Unlock ending</button>
+          </div>
+
+          <div class="error" id="finalError"></div>
+        </div>
+
+        <div class="final-message" id="finalMessage">
+          And this is where the story rests for now, not as an ending, but as a prayer.
+          May Allah protect this love, keep it respectful, keep it close, and turn it into a peaceful,
+          halal, beautiful future. From the corridor where it began to the heart that found him forever,
+          this story belongs only to us.
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h3>One simple reminder</h3>
+      <p class="ending-note">
+        Some stories do not begin loudly. Some begin with a glance, continue through
+        small conversations, survive awkward moments, and become something neither
+        person expected. That is what makes this beautiful.
+      </p>
+    </section>
+
+    <div class="footer">
+      Made with love by <span id="yourNameText">Faisal</span><br />
+      For <span id="footerHerName">Alishba</span>, written with care and respect.
+    </div>
+  </main>
+
+  <script>
+    const herName = "Alishba";
+    const yourName = "Faisal";
+    const finalCode = "FOREVER";
+
+    const parts = [
+      {
+        code: "SILENCE",
+        title: "Part One",
+        subtitle: "The Corridor Where It Began",
+        paragraphs: [
+          `Some stories begin with noise, with confessions, with people knowing exactly what they feel. But some stories begin in silence. Mine began in a university corridor.`,
+
+          `I was new in the department, a girl from the 24 AI batch, still learning the faces, the places, the voices, and the little rules of university life. I used to walk through the corridor like a normal junior, sometimes shy, sometimes quiet, sometimes with my head lowered, not knowing that someone had already noticed me in a way I had never noticed myself.`,
+
+          `He was from the 21 AI batch. A senior. Faisal. At that time, he was just another senior to me. I did not know that the first time he saw me, he got lost in me for a moment. I did not know that while I was simply passing through the corridor, his eyes had stopped on me. For me, it was an ordinary day. For him, maybe it became the first page of a love story.`,
+
+          `After that, he saw me many times. I did not always notice him, but he noticed me. Quietly. Secretly. Like someone watching a beautiful thing from far away, afraid that if he came too close, the moment might disappear.`,
+
+          `Maybe I passed him without knowing. Maybe I stood somewhere without realizing that his eyes had already found me again. Maybe I was just trying to adjust to a new batch, a new place, and a new life, while somewhere in the same department, he had already started remembering my face.`,
+
+          `It feels strange now, thinking that one person can become so important without even knowing when they entered the story. I was simply being myself, unaware that a heart had quietly started choosing me in small, silent ways.`,
+
+          `For me, that corridor was just a corridor. For him, maybe it was the place where everything started. I did not know that soon, in a crowd full of people, his eyes would still search for me, and he would remember me as the girl who once walked through his world in silence and later appeared before him shining.`
+        ]
+      },
+      {
+        code: "SHINING",
+        title: "Part Two",
+        subtitle: "The Welcome Party and His Hidden Eyes",
+        paragraphs: [
+          `Then came our welcome party. It was for our 24 batch, and I still did not know how much I had already started living in his eyes. I was just there, being myself, trying to enjoy the moment like every new student would. There were people around, voices, smiles, pictures, videos, and all the excitement that comes with a welcome party.`,
+
+          `But somewhere in that crowd, he was looking for me. He says I was shining that day. He says his eyes were only searching for me. He says that among everyone there, his heart kept finding only one face, mine.`,
+
+          `I did not know that. I did not know that someone was watching me like I was the only person in the room. I did not know that my presence had become something he wanted to see again and again. Maybe I smiled. Maybe I talked. Maybe I stood there without thinking too much. But to him, maybe every little thing about me became something worth remembering.`,
+
+          `Maybe that is how his love began. Not with words. With eyes. With silence. With a heart that kept looking for me again and again.`,
+
+          `After the welcome party, he found a reason to talk to me. He asked me to send him the pictures and videos on Instagram. At that time, I thought it was just about the party memories. I did not know that behind that simple request, there was a boy trying to create a connection with me.`,
+
+          `A small excuse. A small beginning. A small way to enter my life without making it too obvious.`,
+
+          `At first, I did not have any special feelings for him. I was normal with him. Maybe even a little distant. I did not understand his heart. I did not know how happy my replies made him. I did not know that he was slowly waiting for a place in my life.`,
+
+          `But he stayed gentle. He did not force anything. He kept talking in small ways.`,
+
+          `Maybe he wanted to know me. Maybe he wanted me to notice him. Maybe he wanted just one little reason to keep the conversation alive. I did not understand it then, but now when I look back, even that Instagram excuse feels sweet.`,
+
+          `Because sometimes love does not enter like a storm. Sometimes it enters like a message asking for pictures and videos. Sometimes it hides behind normal words. Sometimes it waits quietly until one person becomes familiar to another.`,
+
+          `At that time, I did not know that this senior, who was finding small reasons to talk to me, would one day become someone so close to my heart. I did not know that his little efforts would slowly turn into memories, and that one day even his playful demand from me would become something I would remember with a smile, a simple salam.`
+        ]
+      },
+      {
+        code: "SALAM",
+        title: "Part Three",
+        subtitle: "A Senior, A Junior, and One Salam",
+        paragraphs: [
+          `He used to encourage me to be strong. When I walked with my head down, he would tell me to raise it and walk confidently. Maybe at that time, I did not realize how sweet that was. I thought he was just saying things normally, maybe like a senior giving advice to a junior. But now, when I think about it, those words feel different.`,
+
+          `He wanted me to be confident. He wanted me to be brave. He wanted me to see myself the way he was beginning to see me.`,
+
+          `There was care in his words before I even knew what his heart felt for me. He was not only looking at me from far away. He was noticing the way I walked, the way I stayed quiet, the way I kept my head down. And somehow, he wanted me to walk like I mattered.`,
+
+          `Then his senior attitude would appear. He used to say that a junior should greet her senior, so I should say salam to him. I know now that he only wanted that salam for himself. He wanted one little moment from me. One little attention. One tiny sign that I noticed him too.`,
+
+          `I think I said salam to him once. Only once. Maybe because I was nervous. Maybe because I was scared. Maybe because I did not know what else to do. But I did it. I gave him that one small moment he wanted, and maybe he kept it in his heart like it was more than just a greeting.`,
+
+          `Now when I remember it, I smile. My tharki senior was already trying to collect little memories with me, even before I understood anything. He would tease me, but there was something soft behind it. Something playful, something sweet, something that now feels like the beginning of our own little language.`,
+
+          `He was my senior, and I was his junior. That was all it seemed to be from the outside. But inside his heart, maybe the story had already started moving forward. He was finding little ways to become familiar to me, and I was slowly becoming used to his presence, even if I did not admit it to myself.`,
+
+          `It is funny how some memories look so small when they happen, but later they become precious. A word. A glance. A greeting. A little nervousness. A little teasing. A moment that passes quickly, but stays in the heart for years.`,
+
+          `Back then, I did not know that one day I would remember that one salam with so much softness. I did not know that our story would soon reach another small moment, one that looked ordinary from the outside but created distance for a while, a moment near the canteen, during exams, because of a pen.`
+        ]
+      },
+      {
+        code: "PEN",
+        title: "Part Four",
+        subtitle: "The Canteen, The Pen, and The Silence",
+        paragraphs: [
+          `Then came the pen incident near the canteen during exams.`,
+
+          `He saw me with my friends and came to me because his friend needed a pen. In his mind, it was simple. We talked on Instagram, so maybe we were friends now. He thought he could ask me. Maybe he thought I would understand. Maybe he thought it was a normal thing.`,
+
+          `But I got nervous. My friends started teasing me, and suddenly I did not know how to handle it. I was not ready for that kind of attention. I did not even understand what was happening between us, and other people had already started noticing something.`,
+
+          `I became awkward. I became scared. And later, on Instagram, I was a little rude to him.`,
+
+          `At that time, he did not understand why. He probably thought I had changed, or maybe I did not like him talking to me. He must have wondered what had happened. He came to me thinking we were friends, and I reacted like I wanted distance.`,
+
+          `But the truth was different. I was not angry at him like that. I was just scared of being teased. I did not know how to act when people started noticing something between us that even I had not understood yet.`,
+
+          `Sometimes a girl does not know how to carry attention. Sometimes she becomes quiet not because she does not care, but because she gets nervous. Sometimes she acts rude because she is protecting herself from questions she does not have answers to.`,
+
+          `After that, we did not talk properly for quite some time. There was silence. Not the peaceful kind of silence. The kind that sits between two people when something small becomes bigger than it was supposed to be.`,
+
+          `But he still did not disappear completely. He came back slowly, through reels. At first, there were only reactions. No proper conversations. Just little signs of presence. A reel here, a reaction there. Maybe he was hoping that somehow, one day, the conversation would begin again.`,
+
+          `He did not come loudly. He did not force me to talk. He just stayed somewhere around the corner of my life, softly reminding me that he was still there. Maybe he was waiting for a chance. Maybe he was hoping I would open the door to conversation again.`,
+
+          `And then one day, I did. It was not dramatic. It was not planned. It was just a normal exam problem, a simple question, a need for help. But maybe in stories like ours, even normal things become special when Allah wants two hearts to come closer.`,
+
+          `After all that silence, the reason that brought our conversations back was not a confession, not a big apology, not a romantic line. It was exams, preparation, a YouTube channel, and calculus.`
+        ]
+      },
+      {
+        code: "CALCULUS",
+        title: "Part Five",
+        subtitle: "The Day Conversations Started Breathing Again",
+        paragraphs: [
+          `One day, I asked him for help with exams. I needed a YouTube channel for calculus preparation. It was such a normal question, but maybe for us, it became another beginning.`,
+
+          `He helped me. He teased me. He annoyed me. He guided me. And somewhere between his help and his teasing, our conversations started breathing again.`,
+
+          `I did not know how happy he was that day. I did not know that just talking to me again meant so much to him. Maybe for me, it was only academic help. But for him, maybe it was the moment he felt that the distance between us had finally started becoming smaller.`,
+
+          `Slowly, little by little, we began to talk more. Not suddenly. Not dramatically. But softly. Like rain falling drop by drop until the whole ground becomes wet.`,
+
+          `Our conversations did not become deep all at once. They grew naturally. Sometimes there was help. Sometimes there was teasing. Sometimes there were small replies. Sometimes there were silly moments. But with time, his presence started becoming familiar to me again.`,
+
+          `This is where I should tell who I am, because maybe the story makes more sense when I say it myself. My name is Alishba. I am the girl from the 24 AI batch who once walked through a corridor without knowing that someone had already started remembering her. I am the junior he sometimes calls tharki junior, while I call him tharki senior.`,
+
+          `I am his Aalu. His ladoo. His kadoo. His danedaar. His bhengi aankhon wali. His darling. His cutie. His cutiepie. And when he calls me cutie with so much love, I call him Patootie.`,
+
+          `Maybe Patootie does not have any meaning. But to us, it has a feeling. It is silly, sweet, and ours. A word that would sound random to anyone else, but to me, it carries his love, his smile, his teasing, and the softness of our bond.`,
+
+          `Maybe that is what love does. It takes ordinary words and gives them a home inside two hearts.`,
+
+          `The more we talked, the more I started understanding him. His jokes. His care. His strange ways of showing happiness. His excitement when I replied. His softness hidden behind teasing. His heart that was already serious about me long before I knew what I was becoming for him.`,
+
+          `I still did not know when feelings would wake up inside me. I still did not know that one day, he would stop being just a senior. But something had started changing. Slowly. Quietly. Without warning.`,
+
+          `Maybe I was not ready to call it love yet. Maybe I did not even recognize it. But his place in my life was no longer as small as before. He had become someone I could talk to, someone who made me smile, someone whose presence no longer felt ordinary.`,
+
+          `And then came the time when his four years of bachelor’s journey were ending. A new memory was waiting for us, one that he still remembers with shining eyes, his farewell.`
+        ]
+      },
+      {
+        code: "FAREWELL",
+        title: "Part Six",
+        subtitle: "The Picture That Was Never Planned",
+        paragraphs: [
+          `Then came his farewell. His four years of bachelor’s journey were ending. It was his farewell party, a day that was supposed to be about him, his batch, his memories, and the closing chapter of his university life.`,
+
+          `But somehow, I became a memory from that day too.`,
+
+          `He still says that I came looking like a patakha. Whenever I remember the way he talks about me from that day, my heart becomes shy and happy at the same time.`,
+
+          `He says my beauty, my style, and my presence from that farewell are still standing in front of his eyes like a picture that never faded. I do not know what exactly he saw in me that day, but I know one thing. The way he remembers me makes me feel beautiful.`,
+
+          `Not just seen. Chosen. Loved.`,
+
+          `There is a difference between being looked at and being remembered. Many people can look at a person for a moment, but not everyone remembers them with love. He remembered me like I was something precious. Like even after the lights, the crowd, the pictures, and the noise, my image stayed with him.`,
+
+          `That farewell day gave us another little memory. By chance, I appeared in the background of one of his pictures. When he went home, he used that as another excuse to start a conversation.`,
+
+          `He said that I came into his picture on purpose. I told him that no, he had secretly taken my picture. He replied that how could he take my picture secretly when he himself was in the picture.`,
+
+          `It was such a small conversation, but now it feels precious. Like two people pretending to argue, while both were actually happy that they had found another reason to talk.`,
+
+          `After that, our conversations became more regular. Then daily. And somewhere in those daily talks, without warning, something changed inside me.`,
+
+          `I do not know the exact moment. Maybe he does not know either. But slowly, he stopped being just a senior.`,
+
+          `He became comfort. He became habit. He became the person whose message could change my mood. The person I waited for without admitting it. The person I missed before I even understood that I was missing him.`,
+
+          `His care felt different. His teasing felt different. His attention felt different. The same boy I once did not understand had slowly become someone my heart started choosing.`,
+
+          `Maybe love does not always arrive with a clear announcement. Maybe sometimes it grows inside daily conversations. Maybe it hides behind jokes, teasing, late replies, little care, and small memories. Then one day, the heart realizes that this person is no longer just a person.`,
+
+          `He had become my comfort. My favorite notification. My habit. The one whose name could soften my mood. The one whose words could stay with me longer than he knew.`,
+
+          `That picture was never planned, but maybe Allah planned the memory behind it. Maybe that one accidental background moment was another way of bringing us closer. After that, he became more than my senior, more than a familiar person, more than someone I talked to. He became the boy I would one day lovingly call Patootie.`
+        ]
+      },
+      {
+        code: "PATOOTIE",
+        title: "Part Seven",
+        subtitle: "The Love That Feels Like Home",
+        paragraphs: [
+          `And now, by Allah’s mercy, we love each other deeply.`,
+
+          `We are not married yet, but our emotions already carry that loyalty, that respect, that attachment, and that warmth that feels like husband and wife. He loves me with a heart that feels serious about me. He makes me feel like I am already a part of his future.`,
+
+          `Like I am not temporary. Like I am not just a feeling. Like I am the woman he wants to build a life with.`,
+
+          `There is something very beautiful about the way he loves me. He is caring, protective, loyal, and soft with me. But then suddenly, his mischievous side appears, and he becomes my tharki senior again. He says things that make me shy, smile, and hide my face even when nobody is watching.`,
+
+          `His romance has warmth in it. His naughtiness has love in it. It is not cheap. It is not careless. It is the kind of sweet closeness that belongs only between two people who truly love each other and see each other as their future.`,
+
+          `He never calls me tu or tum. He calls me with respect. Aap. And maybe that is one of the most beautiful things about him. Even in love, even in teasing, even in romance, there is respect in his words.`,
+
+          `He can call me tharki junior and still make me feel respected. He can call me bhengi aankhon wali and still make me feel like the prettiest girl in the world. He can call me ladoo, kadoo, danedaar, cutiepie, and somehow every name feels like love when it comes from him.`,
+
+          `He makes me feel beautiful in a way I cannot explain. Maybe because his eyes never look at me like I am ordinary. Maybe because he remembers little things. Maybe because he praises me with such honesty that I start believing him. Maybe because his love does not feel like a passing emotion. It feels like home.`,
+
+          `With him, love is not only in big words. It is in the way he notices me. The way he talks to me. The way he protects my heart. The way he gets happy over small things. The way he makes even silly nicknames feel special.`,
+
+          `Aalu. Ladoo. Kadoo. Danedaar. Bhengi aankhon wali. Darling. Cutie. Cutiepie. Every name feels like a different shade of his love.`,
+
+          `And then there is his family. His mother knows about me. His two younger sisters know about me. His youngest brother knows about me. His mother and sisters like me, talk to me, and bond with me, and I know how happy that makes him.`,
+
+          `He says when he sees our bonding, his eyes begin to shine. He says noor fills them. And honestly, that thought touches my heart deeply.`,
+
+          `Because what more can a person ask for? A love that feels real. A person who chooses you again and again. A family that slowly begins to accept you. A bond that starts feeling complete before it has even officially become complete.`,
+
+          `Maybe this is what a complete family feels like. Maybe this is what happens when Allah writes two people for each other in a quiet but beautiful way.`,
+
+          `From a corridor glance to the welcome party. From hidden looks to Instagram messages. From one salam to the pen incident. From silence to reels. From calculus help to daily conversations. From farewell pictures to feelings. From teasing to love.`,
+
+          `Our story did not happen all at once. It grew slowly. It took time. It waited. It made mistakes. It became awkward. It became silent. Then it came back again.`,
+
+          `And maybe that is why it feels so real. Because it was not forced. It was written softly.`,
+
+          `He loved me before I understood his love. He noticed me before I noticed his heart. He waited without making me feel pressured. And now, when I look at him, I feel grateful.`,
+
+          `Grateful that Allah brought him into my life. Grateful that the senior who once secretly looked for me in crowds became the person my heart now looks for everywhere. Grateful that the boy who once asked for welcome party pictures became my Patootie.`,
+
+          `Grateful that the love which began in silence has now become one of the loudest duas of my heart.`,
+
+          `Sometimes I think about that corridor again. The same place where I did not know his eyes had found me. The same beginning I did not understand. The same quiet moment that slowly turned into us.`,
+
+          `Maybe that is the beauty of our story. I did not know he was looking at me. He did not know I would one day look for him too. Allah knew. And maybe that is enough.`,
+
+          `I pray that Allah always keeps us together. I pray that He protects our love from distance, misunderstandings, sadness, and evil eyes. I pray that He keeps our hearts close, no matter what comes.`,
+
+          `Because in this whole world, among so many people, his eyes found me first. And now my heart has found him forever.`
+        ]
+      }
+    ];
+
+    let currentPartIndex = 0;
+    let currentParagraphIndex = 0;
+    const unlockedParts = new Set();
+    let userStarted = false;
+    let showManualFirstCode = false;
+
+    const partTitle = document.getElementById("partTitle");
+    const partSubtitle = document.getElementById("partSubtitle");
+    const progressText = document.getElementById("progressText");
+    const partTabs = document.getElementById("partTabs");
+    const unlockBox = document.getElementById("unlockBox");
+    const storyBox = document.getElementById("storyBox");
+    const storyText = document.getElementById("storyText");
+    const storyDots = document.getElementById("storyDots");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const codeInput = document.getElementById("codeInput");
+    const errorText = document.getElementById("errorText");
+    const unlockTitle = document.getElementById("unlockTitle");
+    const unlockText = document.getElementById("unlockText");
+    const firstPartStartActions = document.getElementById("firstPartStartActions");
+    const codeRow = document.getElementById("codeRow");
+    const finalLock = document.getElementById("finalLock");
+    const finalMessage = document.getElementById("finalMessage");
+    const finalError = document.getElementById("finalError");
+
+    document.getElementById("herNameText").textContent = herName;
+    document.getElementById("footerHerName").textContent = herName;
+    document.getElementById("yourNameText").textContent = yourName;
+
+    document.getElementById("dateChip").textContent = new Date().toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "numeric"
+    });
+
+    function openStartModal() {
+      document.getElementById("startModal").classList.add("show");
+    }
+
+    function closeStartModal() {
+      document.getElementById("startModal").classList.remove("show");
+      scrollToReader();
+    }
+
+    function showFirstCodeInput() {
+      currentPartIndex = 0;
+      currentParagraphIndex = 0;
+      showManualFirstCode = true;
+      scrollToReader();
+    }
+
+    function closeStartModalAndShowInput() {
+      document.getElementById("startModal").classList.remove("show");
+      showFirstCodeInput();
+    }
+
+    function closeStartModalAndUnlock() {
+      document.getElementById("startModal").classList.remove("show");
+      currentPartIndex = 0;
+      currentParagraphIndex = 0;
+      showManualFirstCode = false;
+      unlockedParts.add(0);
+      scrollToReader();
+    }
+
+    function scrollToReader() {
+      userStarted = true;
+      document.getElementById("reader").scrollIntoView({ behavior: "smooth" });
+      renderAll();
+    }
+
+    function renderPartTabs() {
+      partTabs.innerHTML = "";
+
+      parts.forEach((part, index) => {
+        const tab = document.createElement("button");
+        tab.className = "part-tab";
+        tab.textContent = `Part ${index + 1}`;
+        tab.classList.toggle("active", index === currentPartIndex);
+        tab.classList.toggle("locked", !unlockedParts.has(index));
+
+        tab.onclick = () => {
+          currentPartIndex = index;
+          currentParagraphIndex = 0;
+          renderAll();
+        };
+
+        partTabs.appendChild(tab);
+      });
+    }
+
+    function renderAll() {
+      renderPartTabs();
+
+      const part = parts[currentPartIndex];
+
+      partTitle.textContent = part.title;
+      partSubtitle.textContent = part.subtitle;
+      errorText.textContent = "";
+      codeInput.value = "";
+
+      finalLock.classList.remove("show");
+      finalMessage.classList.remove("show");
+      finalError.textContent = "";
+
+      if (!unlockedParts.has(currentPartIndex)) {
+        unlockBox.style.display = "grid";
+        storyBox.style.display = "none";
+        progressText.textContent = "Locked";
+        unlockTitle.textContent = `${part.title} is locked`;
+
+        if (currentPartIndex === 0 && !showManualFirstCode) {
+          unlockText.textContent = "Tap Start the story to open the same first-code popup and begin Part One.";
+          firstPartStartActions.style.display = "flex";
+          codeRow.style.display = "none";
+        } else {
+          firstPartStartActions.style.display = "none";
+          codeRow.style.display = "flex";
+
+          if (currentPartIndex === 0) {
+            unlockText.textContent = "Enter the first code from the opening popup to begin Part One.";
+          } else {
+            unlockText.textContent = "This part needs a code. Read the previous part carefully, or ask Faisal nicely.";
+          }
+
+          if (userStarted) {
+            setTimeout(() => codeInput.focus(), 200);
+          }
+        }
+        return;
+      }
+
+      unlockBox.style.display = "none";
+      storyBox.style.display = "block";
+      renderParagraph();
+    }
+
+    function unlockCurrentPart() {
+      const typedCode = codeInput.value.trim().toUpperCase();
+      const correctCode = parts[currentPartIndex].code;
+
+      if (typedCode === correctCode) {
+        unlockedParts.add(currentPartIndex);
+        if (currentPartIndex === 0) {
+          showManualFirstCode = false;
+        }
+        currentParagraphIndex = 0;
+        renderAll();
+      } else {
+        errorText.textContent = "Wrong code. Read carefully, or try your love magic on Faisal.";
+      }
+    }
+
+    codeInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        unlockCurrentPart();
+      }
+    });
+
+    function createDots() {
+      storyDots.innerHTML = "";
+
+      const total = parts[currentPartIndex].paragraphs.length;
+
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement("span");
+        dot.className = "story-dot";
+        dot.classList.toggle("active", i === currentParagraphIndex);
+        storyDots.appendChild(dot);
+      }
+    }
+
+    function renderParagraph() {
+      const part = parts[currentPartIndex];
+      const total = part.paragraphs.length;
+
+      storyText.classList.remove("show");
+
+      setTimeout(() => {
+        storyText.textContent = part.paragraphs[currentParagraphIndex];
+        storyText.classList.add("show");
+
+        progressText.textContent = `Part ${currentPartIndex + 1} • Paragraph ${currentParagraphIndex + 1} of ${total}`;
+        prevBtn.disabled = currentParagraphIndex === 0;
+
+        if (currentParagraphIndex === total - 1) {
+          nextBtn.textContent = currentPartIndex === parts.length - 1 ? "Final lock" : "Next part";
+        } else {
+          nextBtn.textContent = "Next";
+        }
+
+        createDots();
+
+        if (currentPartIndex === parts.length - 1 && currentParagraphIndex === total - 1) {
+          finalLock.classList.add("show");
+        } else {
+          finalLock.classList.remove("show");
+        }
+      }, 160);
+    }
+
+    function nextParagraph() {
+      const part = parts[currentPartIndex];
+
+      if (currentParagraphIndex < part.paragraphs.length - 1) {
+        currentParagraphIndex++;
+        renderParagraph();
+        return;
+      }
+
+      if (currentPartIndex < parts.length - 1) {
+        currentPartIndex++;
+        currentParagraphIndex = 0;
+        renderAll();
+        return;
+      }
+
+      finalLock.classList.add("show");
+    }
+
+    function previousParagraph() {
+      if (currentParagraphIndex > 0) {
+        currentParagraphIndex--;
+        renderParagraph();
+      }
+    }
+
+    function restartPart() {
+      currentParagraphIndex = 0;
+      renderParagraph();
+    }
+
+    function unlockFinalEnding() {
+      const typedFinal = document.getElementById("finalInput").value.trim().toUpperCase();
+
+      if (typedFinal === finalCode) {
+        finalMessage.classList.add("show");
+        finalError.textContent = "";
+      } else {
+        finalError.textContent = "Not this one. The final word is hidden in the last feeling.";
+      }
+    }
+
+    renderAll();
+
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      particles = Array.from({ length: 55 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2.2 + 0.7,
+        s: Math.random() * 0.45 + 0.15,
+        a: Math.random() * 0.45 + 0.15
+      }));
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 214, 229, ${p.a})`;
+        ctx.fill();
+
+        p.y += p.s;
+
+        if (p.y > canvas.height + 10) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+
+      requestAnimationFrame(drawParticles);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    drawParticles();
+  </script>
+</body>
+</html>
